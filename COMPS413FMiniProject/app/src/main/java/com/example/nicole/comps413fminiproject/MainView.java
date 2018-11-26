@@ -49,22 +49,33 @@ public class MainView extends SurfaceView {
 
     /** Whether the game is over. */
     private boolean gameOver;
+    /** The pause manager. */
+
+
 
     /** Whether the game is paused and waiting for touching to start. */
     private boolean waitForTouch = true;
+    private Drawable PikaDrawable;
+
     /** Saving and handling of user input of touch events. */
     private class UserInput {
         /** Whether there is a user input present. */
         boolean present = false;
 
+        /** Action of the user input {@link MotionEvent}. */
+        int action;
+        /** x, y positions of the user input {@link MotionEvent}. */
+        int x, y;
         /**
          * Sets the user input mouse event for later processing. This method is
          * called in event handlers, i.e., in the main UI thread.
          */
         synchronized void save(MotionEvent event) {
             present = true;
+            action = event.getAction();
+            x = (int) event.getX();
+            y = (int) event.getY();
         }
-
         /**
          * Handles the user input to move the flying android upward. This method is
          * called in the thread of the game loop.
@@ -245,6 +256,11 @@ public class MainView extends SurfaceView {
     public MainView(Context context) {
         super(context);
         this.context = context;
+
+        setFocusableInTouchMode(true); // For getting key events
+
+
+        PikaDrawable = (AnimationDrawable) context.getResources().getDrawable(R.drawable.pikachu);
 
         setOnTouchListener(new View.OnTouchListener() {
             @Override
