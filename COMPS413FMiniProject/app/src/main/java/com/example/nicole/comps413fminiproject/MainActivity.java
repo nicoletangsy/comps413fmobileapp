@@ -2,10 +2,12 @@ package com.example.nicole.comps413fminiproject;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     /** The animation view. */
     private MainView animationView;
 
@@ -14,6 +16,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         animationView = new MainView(this);
         setContentView(animationView);
+
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
     }
 
     @Override

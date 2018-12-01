@@ -1,5 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">COMPS413FMiniProject</string>
     <string name="action_restart">Restart</string>
     <string name="hello_world">Hello World!</string>
+    <string name="new_game">New Game</string>
+    <string name="pause">Pause</string>
+    <string name="about_us">About Us</string>
 </resources>
