@@ -15,56 +15,27 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
-/** View of flying android animation. */
 public class MainView extends SurfaceView {
-    /** Delay in each animation cycle, in ms. */
     private static final int CYCLE_DELAY = 30;
-    /** Text size. */
     private static final int TEXT_SIZE = 24;
-
-    /** Width and height of the arena. */
     public static int arenaWidth;
     public static int arenaHeight;
-
-    /** Animation object, the flying android. */
     private Pikachu pikachu;
-    /** List of obstacles objects, i.e., pairs of pipes. */
-    //private Vector<Obstacles> obstacles = new Vector<Obstacles>();
-    /** Scrolling background of the view. */
     Background background;
-
-    /** Timer for the game loop. */
     private Timer timer = null;
-
     private Context context;
-
-    /** Start time of the game. */
     private long startTime = 0;
-    /** Pause time of the game. */
     private long pauseTime = 0;
-    /** Total time elapsed of the game. */
     private float totalTime = 0;
-    /** Obstacle creation time. */
+    private Vector<Obstacles> obstacles = new Vector<Obstacles>();
     private float obstacleCreationTime;
-
-    /** Whether the game is over. */
     private boolean gameOver;
-    /** The pause manager. */
-
-
-
-    /** Whether the game is paused and waiting for touching to start. */
     private boolean waitForTouch = true;
     private Drawable PikaDrawable;
 
-    /** Saving and handling of user input of touch events. */
     private class UserInput {
-        /** Whether there is a user input present. */
         boolean present = false;
-
-        /** Action of the user input {@link MotionEvent}. */
         int action;
-        /** x, y positions of the user input {@link MotionEvent}. */
         int x, y;
         /**
          * Sets the user input mouse event for later processing. This method is
@@ -82,15 +53,6 @@ public class MainView extends SurfaceView {
          */
         synchronized void handle() {
             if (present) {
-                // Add code here
-                // Task 4: Handling of user input
-                // If (waitForTouch)
-                // - Set waitForTouch to false
-                // - Get current time and assign to startTime
-                // - Start scrolling background
-                // - Start animation of the flying android
-                // Otherwise
-                // - Move the flying android upward
                 if (waitForTouch) {  // Start of the game
                     waitForTouch = false;
                     startTime = System.currentTimeMillis();
@@ -101,7 +63,6 @@ public class MainView extends SurfaceView {
             }
         }
     }
-    /** User input object of touch events. */
     private UserInput userInput = new UserInput();
 
     /** Task for the game loop. */
@@ -110,53 +71,36 @@ public class MainView extends SurfaceView {
         public void run() {
             userInput.handle();
             if (!gameOver && !waitForTouch) {
-                // Add code here
-                // Task 5: Game loop implementation
-
-                // i. Create obstacles
-                //createObstacles();
-
-                // ii. Move the flying android
+                createObstacles();
                 pikachu.move();
             }
-
-            // v. Draw the game objects
+            for (int i=0; i<obstacles.size(); i++) {
+                obstacles.get(i).move();
+                if(obstacles.get(i).collideWith(pikachu)) {
+                    gameOver();
+                    break;
+                }
+                if (obstacles.get(i).isOutOfArena()) {
+                    obstacles.remove(i);
+                }
+            }
             Canvas canvas = getHolder().lockCanvas();
             if (canvas != null) {
-                // a. Draw the scrolling background
                 background.drawOn(canvas);
-
-                // b. Draw the obstacles
-                //for (int i = 0; i < obstacles.size(); i++) {
-                //    obstacles.get(i).drawOn(canvas);
-                //}
-
-                // c. Draw the flying android
+                for (int i = 0; i < obstacles.size(); i++) {
+                   obstacles.get(i).drawOn(canvas);
+                }
                 pikachu.drawOn(canvas);
-
-                // d. Draw game text
                 drawGameText(canvas);
-
                 getHolder().unlockCanvasAndPost(canvas);
             }
         }
 
-        /** Paint object for painting text. */
         private Paint textPaint = new Paint();
-        /** Draws text for the game. */
         private void drawGameText(Canvas canvas) {
             Resources res = getResources();
             textPaint.setColor(Color.BLACK);
             textPaint.setTextSize(TEXT_SIZE);
-
-            // Add code here
-            // Task 1: Draw game information
-            // If game over
-            // - Draw "Game Over" and the total time elapsed
-            // Else if wait for touch
-            // - Draw "Touch to Start!"
-            // Else
-            // - Draw the total time elapsed on the top left corner of the arena
             if (gameOver) {
                 if (startTime > 0) {
                     totalTime += (System.currentTimeMillis() - startTime);
@@ -182,29 +126,23 @@ public class MainView extends SurfaceView {
         }
     }
 
-    /** Create obstacles randomly. */
-    /*public void createObstacles() {
-        // Add code here
+    public void createObstacles() {
         // Task 2: Create one pair of pipes for every 15-25s randomly
         float gameTime = (System.currentTimeMillis() - startTime + totalTime);
         float timeDiff = gameTime - obstacleCreationTime;
-        if (obstacleCreationTime == -1 || timeDiff > ((Math.random()*10000) + 15000)) {
+        if (obstacleCreationTime == -1 || timeDiff > ((Math.random()*10000) + 10000)) {
             obstacleCreationTime = gameTime;
             Obstacles o = new Obstacles(context);
             obstacles.add(o);
         }
-    }*/
+    }
 
     /** Game over. */
     public void gameOver() {
-        // Add code here
-        // Task 3: Game over handling
-        // i. Set gameOver to true
-        // ii. Stop the animation of the flying andriod
-        // iii. Stop the scrolling background
         gameOver = true;
         ((AnimationDrawable)(pikachu.getDrawable())).stop();
         background.stop(true);
+
     }
 
     /** Resume or start the animation. */
@@ -244,7 +182,7 @@ public class MainView extends SurfaceView {
         startTime = -1;
         obstacleCreationTime = -1;
         pikachu.reset();
-
+        obstacles.clear();
         ((AnimationDrawable)(pikachu.getDrawable())).stop();
         background.stop(true);
     }

@@ -55,6 +55,4 @@ abstract public class Sprite {
     }
 
     abstract public void move();
-    abstract public void moveLeft();
-    abstract public void moveRight();
 }

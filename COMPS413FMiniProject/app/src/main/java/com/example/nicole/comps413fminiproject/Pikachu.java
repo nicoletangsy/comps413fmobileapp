@@ -14,7 +14,7 @@ public class Pikachu extends Sprite {
     }
 
     public void reset() {
-        float x = (MainView.arenaWidth - (getWidth()*3/2)) / 2.f;
+        float x = (MainView.arenaWidth) * 2.f / 5.f;
         float y = 0;
         setPosition(x, y);
     }
