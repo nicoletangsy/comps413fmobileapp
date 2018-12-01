@@ -2,4 +2,7 @@
     <string name="app_name">COMPS413FMiniProject</string>
     <string name="action_restart">Restart</string>
     <string name="hello_world">Hello World!</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_resume">Resume</string>
+    <string name="action_about">About Us</string>
 </resources>
