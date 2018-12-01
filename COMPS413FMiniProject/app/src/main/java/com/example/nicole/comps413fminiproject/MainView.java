@@ -14,6 +14,7 @@ import android.view.View;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 public class MainView extends SurfaceView {
     private static final int CYCLE_DELAY = 30;
@@ -45,7 +46,6 @@ public class MainView extends SurfaceView {
             present = true;
             action = event.getAction();
             x = (int) event.getX();
-            y = (int) event.getY();
         }
         /**
          * Handles the user input to move the flying android upward. This method is
@@ -58,6 +58,8 @@ public class MainView extends SurfaceView {
                     startTime = System.currentTimeMillis();
                     background.stop(false);
                     ((AnimationDrawable)(pikachu.getDrawable())).start();
+                } else {
+                    pikachu.updateLane(x);
                 }
                 present = false;
             }
