@@ -36,7 +36,7 @@ public class MainView extends SurfaceView {
     private PauseManager pause;
     private boolean waitForTouch = true;
     private Drawable PikaDrawable;
-    private int coinnum;
+    private int coinnum = 0;
 
     private class UserInput {
         boolean present = false;
@@ -142,7 +142,7 @@ public class MainView extends SurfaceView {
                 textPaint.setTextAlign(Paint.Align.LEFT);
                 float gameTime = (System.currentTimeMillis() - startTime + totalTime) / 1000.0f;
                 canvas.drawText(res.getString(R.string.time_elapse, gameTime), TEXT_SIZE, TEXT_SIZE, textPaint);
-                canvas.drawText(res.getString(R.string.coin_get), TEXT_SIZE, TEXT_SIZE*2, textPaint);
+                canvas.drawText(res.getString(R.string.coin_get, coinnum), TEXT_SIZE, TEXT_SIZE*2, textPaint);
             }
         }
     }
@@ -159,10 +159,10 @@ public class MainView extends SurfaceView {
     }
 
     public void createCoin() {
-        // Task 2: Create one pair of pipes for every 15-25s randomly
+        // Task 2: Create one pair of pipes for every 5-10s randomly
         float gameTime = (System.currentTimeMillis() - startTime + totalTime);
         float timeDiff = gameTime - coinCreationTime;
-        if (coinCreationTime == -1 || timeDiff > ((Math.random()*5000) + 10000)) {
+        if (coinCreationTime == -1 || timeDiff > ((Math.random()*5000) + 5000)) {
             coinCreationTime = gameTime;
             Coin o = new Coin(context);
             coin.add(o);
