@@ -50,11 +50,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_pause:
                 onPause();
-                animationView.pause();
                 break;
             case R.id.action_resume:
                 onResume();
-                animationView.resume();
                 break;
             case R.id.action_about:
                 Intent intent = new Intent(this,About.class);
