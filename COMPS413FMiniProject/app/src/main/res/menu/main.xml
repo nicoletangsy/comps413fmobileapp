@@ -11,22 +11,18 @@
         android:minHeight="@dimen/abc_action_bar_default_height_material"
         android:background="?attr/colorPrimary"
         />
-    <item
-        android:id="@+id/pause"
-        android:title="@string/pause"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
 
-    <item
-        android:id="@+id/action_restart"
-        android:title="@string/action_restart"
-<<<<<<< HEAD
-        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_pause"
         android:orderInCategory="100"
         android:title="@string/action_pause"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_restart"
+        android:title="@string/action_restart"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_resume"
         android:orderInCategory="100"
@@ -38,22 +34,6 @@
         android:title="@string/action_about"
         app:showAsAction="never"
         android:onClick="about"
-
         />
-=======
-        android:orderInCategory="100"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/new_game"
-        android:title="@string/new_game"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
 
-    <item
-        android:id="@+id/about_us"
-        android:title="@string/about_us"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
-
->>>>>>> 7f1b17b8d0d6289e14ba8e4b39f4ac67b6d1ca1d
 </menu>

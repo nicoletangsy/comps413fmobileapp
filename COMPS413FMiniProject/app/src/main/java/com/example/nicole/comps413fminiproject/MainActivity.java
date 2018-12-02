@@ -3,12 +3,10 @@ package com.example.nicole.comps413fminiproject;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.provider.Settings;
-=======
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
->>>>>>> 7f1b17b8d0d6289e14ba8e4b39f4ac67b6d1ca1d
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -48,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_restart:
+                //newGame(true);
                 animationView.newGame(false);
                 break;
             case R.id.action_pause:

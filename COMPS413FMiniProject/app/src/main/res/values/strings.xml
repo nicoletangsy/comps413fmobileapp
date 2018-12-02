@@ -3,7 +3,6 @@
     <string name="app_name">COMPS413FMiniProject</string>
     <string name="action_restart">Restart</string>
     <string name="hello_world">Hello World!</string>
-<<<<<<< HEAD
     <string name="action_pause">Pause</string>
     <string name="action_resume">Resume</string>
     <string name="action_about">About Us</string>
@@ -11,9 +10,7 @@
     <string name="coin_get">"Coin: 0"</string>
     <string name="game_over">Game Over!</string>
     <string name="start">Touch to start!</string>
-=======
     <string name="new_game">New Game</string>
-    <string name="pause">Pause</string>
-    <string name="about_us">About Us</string>
->>>>>>> 7f1b17b8d0d6289e14ba8e4b39f4ac67b6d1ca1d
+
+
 </resources>
