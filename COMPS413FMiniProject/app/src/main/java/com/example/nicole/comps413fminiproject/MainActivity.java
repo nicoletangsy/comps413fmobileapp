@@ -1,6 +1,7 @@
 package com.example.nicole.comps413fminiproject;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.Settings;

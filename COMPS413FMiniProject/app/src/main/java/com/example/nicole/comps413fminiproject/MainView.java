@@ -32,11 +32,14 @@ public class MainView extends SurfaceView {
     private Vector<Coin> coin = new Vector<Coin>();
     private float obstacleCreationTime;
     private float coinCreationTime;
+    private float speedupTime = 0;
     private boolean gameOver;
     private PauseManager pause;
     private boolean waitForTouch = true;
-    private Drawable PikaDrawable;
+    //private Drawable PikaDrawable;
+    private Drawable bomb;
     private int coinnum = 0;
+    private int bestCoin = 0;
 
     private class UserInput {
         boolean present = false;
@@ -80,6 +83,7 @@ public class MainView extends SurfaceView {
                 createObstacles();
                 createCoin();
                 pikachu.move();
+                speedup();
             }
             for (int i=0; i<obstacles.size(); i++) {
                 obstacles.get(i).move();
@@ -141,8 +145,10 @@ public class MainView extends SurfaceView {
                 textPaint.setTextSize(TEXT_SIZE);
                 textPaint.setTextAlign(Paint.Align.LEFT);
                 float gameTime = (System.currentTimeMillis() - startTime + totalTime) / 1000.0f;
-                canvas.drawText(res.getString(R.string.time_elapse, gameTime), TEXT_SIZE, TEXT_SIZE, textPaint);
-                canvas.drawText(res.getString(R.string.coin_get, coinnum), TEXT_SIZE, TEXT_SIZE*2, textPaint);
+                canvas.drawText(res.getString(R.string.highest, bestCoin), TEXT_SIZE, TEXT_SIZE, textPaint);
+                canvas.drawText(res.getString(R.string.time_elapse, gameTime), TEXT_SIZE, TEXT_SIZE*2, textPaint);
+                canvas.drawText(res.getString(R.string.coin_get, coinnum), TEXT_SIZE, TEXT_SIZE*3, textPaint);
+                //canvas.drawText(res.getString(R.string.speed, background.SpeedYMagnitude), TEXT_SIZE, TEXT_SIZE*3, textPaint);
             }
         }
     }
@@ -159,13 +165,22 @@ public class MainView extends SurfaceView {
     }
 
     public void createCoin() {
-        // Task 2: Create one pair of pipes for every 5-10s randomly
+        // Task 2: Create one pair of pipes for every 3-5s randomly
         float gameTime = (System.currentTimeMillis() - startTime + totalTime);
         float timeDiff = gameTime - coinCreationTime;
-        if (coinCreationTime == -1 || timeDiff > ((Math.random()*5000) + 5000)) {
+        if (coinCreationTime == -1 || timeDiff > ((Math.random()*3000) + 2000)) {
             coinCreationTime = gameTime;
             Coin o = new Coin(context);
             coin.add(o);
+        }
+    }
+
+    public void speedup() {
+        float gameTime = (System.currentTimeMillis() - startTime + totalTime);
+        float timeDiff = gameTime - speedupTime;
+        if (timeDiff > ((Math.random()*5000) + 10000)) {
+            speedupTime = gameTime;
+            Background.SpeedYMagnitude -= 1;
         }
     }
 
@@ -174,7 +189,9 @@ public class MainView extends SurfaceView {
         gameOver = true;
         ((AnimationDrawable)(pikachu.getDrawable())).stop();
         background.stop(true);
-
+        if (coinnum > bestCoin) {
+            bestCoin = coinnum;
+        }
     }
 
     /** Resume or start the animation. */
@@ -234,10 +251,10 @@ public class MainView extends SurfaceView {
 
         pause = new PauseManager(context, true);
 
-        setFocusableInTouchMode(true); // For getting key events
+        //setFocusableInTouchMode(true); // For getting key events
 
 
-        PikaDrawable = (AnimationDrawable) context.getResources().getDrawable(R.drawable.pikachu);
+        //PikaDrawable = (AnimationDrawable) context.getResources().getDrawable(R.drawable.pikachu);
 
         setOnTouchListener(new View.OnTouchListener() {
             @Override
