@@ -5,7 +5,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
 /** Pause manager for managin the pause/playing status and drawables. */
-public class pauseManager {
+public class PauseManager {
     /** The drawable when the game pause. */
     private Drawable pauseDrawable;
     /** The drawable when the game start. */
@@ -14,7 +14,7 @@ public class pauseManager {
     private boolean pause;
 
     /** Constructs a pause manager object. */
-    public pauseManager(Context context, boolean pause) {
+    public PauseManager(Context context, boolean pause) {
         this.pause = pause;
         //pauseDrawable = context.getResources().getDrawable(R.drawable.pause);
         //startDrawable = context.getResources().getDrawable(R.drawable.start);

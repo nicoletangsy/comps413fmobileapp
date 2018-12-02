@@ -33,6 +33,7 @@ public class MainView extends SurfaceView {
     private float obstacleCreationTime;
     private float coinCreationTime;
     private boolean gameOver;
+    private PauseManager pause;
     private boolean waitForTouch = true;
     private Drawable PikaDrawable;
     private int coinnum;

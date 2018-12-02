@@ -3,13 +3,18 @@ package com.example.nicole.comps413fminiproject;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.provider.Settings;
+=======
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+>>>>>>> 7f1b17b8d0d6289e14ba8e4b39f4ac67b6d1ca1d
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.content.Intent;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     /** The animation view. */
     private MainView animationView;
 
@@ -19,6 +24,12 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         animationView = new MainView(this);
         setContentView(animationView);
+
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
     }
 
     @Override
