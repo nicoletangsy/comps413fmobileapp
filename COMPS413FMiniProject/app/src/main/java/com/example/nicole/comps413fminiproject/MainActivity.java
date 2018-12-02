@@ -1,7 +1,9 @@
 package com.example.nicole.comps413fminiproject;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,9 +41,11 @@ public class MainActivity extends Activity {
                 break;
             case R.id.action_pause:
                 onPause();
+                animationView.pause();
                 break;
             case R.id.action_resume:
                 onResume();
+                animationView.resume();
                 break;
             case R.id.action_about:
                 Intent intent = new Intent(this,About.class);

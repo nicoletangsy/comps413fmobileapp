@@ -29,10 +29,13 @@ public class MainView extends SurfaceView {
     private long pauseTime = 0;
     private float totalTime = 0;
     private Vector<Obstacles> obstacles = new Vector<Obstacles>();
+    private Vector<Coin> coin = new Vector<Coin>();
     private float obstacleCreationTime;
+    private float coinCreationTime;
     private boolean gameOver;
     private boolean waitForTouch = true;
     private Drawable PikaDrawable;
+    private int coinnum;
 
     private class UserInput {
         boolean present = false;
@@ -74,6 +77,7 @@ public class MainView extends SurfaceView {
             userInput.handle();
             if (!gameOver && !waitForTouch) {
                 createObstacles();
+                createCoin();
                 pikachu.move();
             }
             for (int i=0; i<obstacles.size(); i++) {
@@ -86,11 +90,24 @@ public class MainView extends SurfaceView {
                     obstacles.remove(i);
                 }
             }
+            for (int i=0; i<coin.size(); i++) {
+                coin.get(i).move();
+                if(coin.get(i).collideWith(pikachu)) {
+                    coinnum += 1;
+                    coin.remove(i);
+                }
+                if (coin.get(i).isOutOfArena()) {
+                    coin.remove(i);
+                }
+            }
             Canvas canvas = getHolder().lockCanvas();
             if (canvas != null) {
                 background.drawOn(canvas);
                 for (int i = 0; i < obstacles.size(); i++) {
                    obstacles.get(i).drawOn(canvas);
+                }
+                for (int i = 0; i < coin.size(); i++) {
+                    coin.get(i).drawOn(canvas);
                 }
                 pikachu.drawOn(canvas);
                 drawGameText(canvas);
@@ -111,19 +128,20 @@ public class MainView extends SurfaceView {
                 float gameTime = totalTime / 1000.0f;
                 textPaint.setTextSize(2 * TEXT_SIZE);
                 textPaint.setTextAlign(Paint.Align.CENTER);
-                //canvas.drawText(res.getString(R.string.game_over), getWidth() / 2, getHeight() / 2, textPaint);
-                //canvas.drawText(res.getString(R.string.time_elapse, gameTime), getWidth() / 2, getHeight() / 2 + (2 * TEXT_SIZE), textPaint);
+                canvas.drawText(res.getString(R.string.game_over), getWidth() / 2, getHeight() / 2, textPaint);
+                canvas.drawText(res.getString(R.string.time_elapse, gameTime), getWidth() / 2, getHeight() / 2 + (2 * TEXT_SIZE), textPaint);
             }
             else if (waitForTouch) {
                 textPaint.setTextSize(2 * TEXT_SIZE);
                 textPaint.setTextAlign(Paint.Align.CENTER);
-                //canvas.drawText(res.getString(R.string.start), getWidth() / 2, getHeight() / 2, textPaint);
+                canvas.drawText(res.getString(R.string.start), getWidth() / 2, getHeight() / 2, textPaint);
             }
             else {
                 textPaint.setTextSize(TEXT_SIZE);
                 textPaint.setTextAlign(Paint.Align.LEFT);
                 float gameTime = (System.currentTimeMillis() - startTime + totalTime) / 1000.0f;
-                //canvas.drawText(res.getString(R.string.time_elapse, gameTime), TEXT_SIZE, TEXT_SIZE, textPaint);
+                canvas.drawText(res.getString(R.string.time_elapse, gameTime), TEXT_SIZE, TEXT_SIZE, textPaint);
+                canvas.drawText(res.getString(R.string.coin_get), TEXT_SIZE, TEXT_SIZE*2, textPaint);
             }
         }
     }
@@ -136,6 +154,17 @@ public class MainView extends SurfaceView {
             obstacleCreationTime = gameTime;
             Obstacles o = new Obstacles(context);
             obstacles.add(o);
+        }
+    }
+
+    public void createCoin() {
+        // Task 2: Create one pair of pipes for every 15-25s randomly
+        float gameTime = (System.currentTimeMillis() - startTime + totalTime);
+        float timeDiff = gameTime - coinCreationTime;
+        if (coinCreationTime == -1 || timeDiff > ((Math.random()*5000) + 10000)) {
+            coinCreationTime = gameTime;
+            Coin o = new Coin(context);
+            coin.add(o);
         }
     }
 
@@ -183,8 +212,10 @@ public class MainView extends SurfaceView {
         totalTime = 0;
         startTime = -1;
         obstacleCreationTime = -1;
+        coinnum = 0;
         pikachu.reset();
         obstacles.clear();
+        coin.clear();
         ((AnimationDrawable)(pikachu.getDrawable())).stop();
         background.stop(true);
     }
