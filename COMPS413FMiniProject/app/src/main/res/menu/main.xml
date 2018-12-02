@@ -11,11 +11,6 @@
         android:minHeight="@dimen/abc_action_bar_default_height_material"
         android:background="?attr/colorPrimary"
         />
-    <item
-        android:id="@+id/pause"
-        android:title="@string/pause"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_restart"

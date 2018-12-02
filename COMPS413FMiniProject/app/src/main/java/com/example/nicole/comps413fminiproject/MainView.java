@@ -186,7 +186,10 @@ public class MainView extends SurfaceView {
 
     /** Pause or stop the animation. */
     public void pause() {
+        timer.cancel();
+        timer = null;
         totalTime += (System.currentTimeMillis() - startTime);
+        pause.setPause(true);
         waitForTouch = true;
 
         background.stop(true);
@@ -228,6 +231,8 @@ public class MainView extends SurfaceView {
     public MainView(Context context) {
         super(context);
         this.context = context;
+
+        pause = new PauseManager(context, true);
 
         setFocusableInTouchMode(true); // For getting key events
 

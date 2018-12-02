@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_restart:
+                //newGame(true);
                 animationView.newGame(false);
                 break;
             case R.id.action_pause:
