@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.content.Intent;
 
 public class MainActivity extends Activity {
     /** The animation view. */
@@ -43,7 +44,11 @@ public class MainActivity extends Activity {
                 onResume();
                 break;
             case R.id.action_about:
-                break;
+                Intent intent = new Intent(this,About.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
         return false;
     }
@@ -61,4 +66,6 @@ public class MainActivity extends Activity {
         super.onPause();
         animationView.pause();
     }
+
+
 }

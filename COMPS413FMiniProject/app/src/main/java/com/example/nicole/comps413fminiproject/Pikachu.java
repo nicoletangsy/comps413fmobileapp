@@ -30,12 +30,41 @@ public class Pikachu extends Sprite {
 
     public void updateLane(int x) {
         float halfscreen = (MainView.arenaWidth) / 2.f;
-        if (x > halfscreen && lane < 3) {
-            lane += 1;
+
+        if (x > halfscreen){
+            switch (lane) {
+                case 1:
+                    lane = 2;
+                    break;
+                case 2:
+                    lane = 3;
+                    break;
+                case 3:
+                    lane = 3;
+                    break;
+                }
+
         }
-        if (x < halfscreen && lane > 1) {
-            lane -= 1;
+        else if (x < halfscreen) {
+            switch (lane) {
+                case 1:
+                    lane = 1;
+                    break;
+                case 2:
+                    lane = 1;
+                    break;
+                case 3:
+                    lane = 2;
+                    break;
+            }
+
         }
+        //if (x > halfscreen && lane < 3) {
+        //    lane += 1;
+        //}
+        //if (x < halfscreen && lane > 1) {
+        //    lane -= 1;
+        //}
         gotoLane(lane);
     }
 
