@@ -30,6 +30,7 @@ public class MainView extends SurfaceView {
     private float totalTime = 0;
     private Vector<Obstacles> obstacles = new Vector<Obstacles>();
     private Vector<Coin> coin = new Vector<Coin>();
+    private Vector<Bomb> bomb = new Vector<Bomb>();
     private float obstacleCreationTime;
     private float coinCreationTime;
     private float speedupTime = 0;
@@ -37,7 +38,6 @@ public class MainView extends SurfaceView {
     private PauseManager pause;
     private boolean waitForTouch = true;
     //private Drawable PikaDrawable;
-    private Drawable bomb;
     private int coinnum = 0;
     private int bestCoin = 0;
 
@@ -82,6 +82,7 @@ public class MainView extends SurfaceView {
             if (!gameOver && !waitForTouch) {
                 createObstacles();
                 createCoin();
+                createBomb();
                 pikachu.move();
                 speedup();
             }
@@ -105,6 +106,9 @@ public class MainView extends SurfaceView {
                     coin.remove(i);
                 }
             }
+            for (int i=0; i<bomb.size(); i++) {
+                bomb.get(i).move();
+            }
             Canvas canvas = getHolder().lockCanvas();
             if (canvas != null) {
                 background.drawOn(canvas);
@@ -113,6 +117,9 @@ public class MainView extends SurfaceView {
                 }
                 for (int i = 0; i < coin.size(); i++) {
                     coin.get(i).drawOn(canvas);
+                }
+                for (int i = 0; i < coin.size(); i++) {
+                    bomb.get(i).drawOn(canvas);
                 }
                 pikachu.drawOn(canvas);
                 drawGameText(canvas);
@@ -173,6 +180,11 @@ public class MainView extends SurfaceView {
             Coin o = new Coin(context);
             coin.add(o);
         }
+    }
+
+    public void createBomb() {
+        Bomb o = new Bomb(context);
+        bomb.add(o);
     }
 
     public void speedup() {
