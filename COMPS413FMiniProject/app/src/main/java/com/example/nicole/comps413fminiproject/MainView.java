@@ -7,9 +7,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.GestureDetector;
+
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +44,7 @@ public class MainView extends SurfaceView {
     //private Drawable PikaDrawable;
     private int coinnum = 0;
     private int bestCoin = 0;
+    //private String TAG = GestureActivity.class.getSimpleName();
 
     private class UserInput {
         boolean present = false;
@@ -49,10 +54,12 @@ public class MainView extends SurfaceView {
          * Sets the user input mouse event for later processing. This method is
          * called in event handlers, i.e., in the main UI thread.
          */
+
         synchronized void save(MotionEvent event) {
             present = true;
             action = event.getAction();
             x = (int) event.getX();
+            y = (int) event.getY();
         }
         /**
          * Handles the user input to move the flying android upward. This method is
@@ -71,11 +78,14 @@ public class MainView extends SurfaceView {
                 present = false;
             }
         }
+
     }
     private UserInput userInput = new UserInput();
 
+
     /** Task for the game loop. */
     private class AnimationTask extends TimerTask {
+
         @Override
         public void run() {
             userInput.handle();
@@ -183,10 +193,9 @@ public class MainView extends SurfaceView {
     }
 
     public void createBomb() {
-        Bomb o = new Bomb(context);
-        bomb.add(o);
+            Bomb o = new Bomb(context);
+            bomb.add(o);
     }
-
     public void speedup() {
         float gameTime = (System.currentTimeMillis() - startTime + totalTime);
         float timeDiff = gameTime - speedupTime;

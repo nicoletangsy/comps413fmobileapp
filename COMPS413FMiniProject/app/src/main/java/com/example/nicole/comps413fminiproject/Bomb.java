@@ -10,7 +10,7 @@ public class Bomb {
 
     /** Constructor. */
     public Bomb(Context context) {
-        float x = MainView.arenaWidth * 2.f / 5.f;
+        float x = MainView.arenaWidth * 4.f / 5.f;
         int y = 0;
 
         Bomb[0] = new Obstacle(context, R.drawable.bomb1);
