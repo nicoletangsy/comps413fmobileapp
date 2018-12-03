@@ -9,7 +9,7 @@
     <string name="time_elapse">"Time: %1$.1fs"</string>
     <string name="coin_get">"Coin: %1$d"</string>
     <string name="highest">"Highest: %1$d"</string>
-    <string name="speed">"Speed: %1$d"</string>
+    <string name="speed">"Test: %1$d"</string>
     <string name="game_over">Game Over!</string>
     <string name="start">Touch to start!</string>
     <string name="new_game">New Game</string>

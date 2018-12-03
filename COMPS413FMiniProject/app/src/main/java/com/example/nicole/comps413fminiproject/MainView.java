@@ -44,6 +44,7 @@ public class MainView extends SurfaceView {
     //private Drawable PikaDrawable;
     private int coinnum = 0;
     private int bestCoin = 0;
+    private int bombnum = 0;
     //private String TAG = GestureActivity.class.getSimpleName();
 
     private class UserInput {
@@ -128,7 +129,7 @@ public class MainView extends SurfaceView {
                 for (int i = 0; i < coin.size(); i++) {
                     coin.get(i).drawOn(canvas);
                 }
-                for (int i = 0; i < coin.size(); i++) {
+                for (int i = 0; i < bomb.size(); i++) {
                     bomb.get(i).drawOn(canvas);
                 }
                 pikachu.drawOn(canvas);
@@ -165,7 +166,7 @@ public class MainView extends SurfaceView {
                 canvas.drawText(res.getString(R.string.highest, bestCoin), TEXT_SIZE, TEXT_SIZE, textPaint);
                 canvas.drawText(res.getString(R.string.time_elapse, gameTime), TEXT_SIZE, TEXT_SIZE*2, textPaint);
                 canvas.drawText(res.getString(R.string.coin_get, coinnum), TEXT_SIZE, TEXT_SIZE*3, textPaint);
-                //canvas.drawText(res.getString(R.string.speed, background.SpeedYMagnitude), TEXT_SIZE, TEXT_SIZE*3, textPaint);
+                canvas.drawText(res.getString(R.string.speed, bomb.size()), TEXT_SIZE, TEXT_SIZE*4, textPaint);
             }
         }
     }
@@ -193,8 +194,11 @@ public class MainView extends SurfaceView {
     }
 
     public void createBomb() {
+        if (bombnum == 0) {
             Bomb o = new Bomb(context);
             bomb.add(o);
+            bombnum++;
+        }
     }
     public void speedup() {
         float gameTime = (System.currentTimeMillis() - startTime + totalTime);
@@ -258,8 +262,11 @@ public class MainView extends SurfaceView {
         pikachu.reset();
         obstacles.clear();
         coin.clear();
+        bomb.clear();
+
         ((AnimationDrawable)(pikachu.getDrawable())).stop();
         background.stop(true);
+        Background.SpeedYMagnitude = -2;
     }
 
     /**
