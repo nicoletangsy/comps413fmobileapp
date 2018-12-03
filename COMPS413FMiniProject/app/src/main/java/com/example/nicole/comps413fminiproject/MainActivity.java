@@ -79,5 +79,7 @@ public class MainActivity extends AppCompatActivity {
         animationView.pause();
     }
 
-
+    public void about (MenuItem item) {
+        
+    }
 }
