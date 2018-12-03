@@ -48,21 +48,18 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_restart:
                 //newGame(true);
                 animationView.newGame(false);
-                break;
+                return true;
             case R.id.action_pause:
                 onPause();
-                break;
+                return true;
             case R.id.action_resume:
                 onResume();
-                break;
+                return true;
             case R.id.action_about:
-                Intent intent = new Intent(this,About.class);
-                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-        return false;
     }
 
     /** Resumes the animation. This method is called when the activity is resumed. */
@@ -80,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void about (MenuItem item) {
-        
+        Intent intent = new Intent(this,About.class);
+        startActivity(intent);
     }
 }

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.nicole.comps413fminiproject.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/abc_action_bar_default_height_material"
-        android:layout_width="match_parent"
-        android:minHeight="@dimen/abc_action_bar_default_height_material"
         android:background="?attr/colorPrimary"
-        />
+        android:minHeight="@dimen/abc_action_bar_default_height_material" />
 
     <item
         android:id="@+id/action_restart"
@@ -31,9 +30,8 @@
 
     <item
         android:id="@+id/action_about"
+        android:onClick="about"
         android:orderInCategory="100"
         android:title="@string/action_about"
-        app:showAsAction="never"
-        android:onClick="about"
-        />
+        app:showAsAction="never" />
 </menu>
