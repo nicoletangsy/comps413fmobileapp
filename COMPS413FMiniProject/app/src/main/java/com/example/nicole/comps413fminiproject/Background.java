@@ -6,8 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 public class Background {
-    static int SpeedYMagnitude = -2;
-    private static int speedY = 0;
+    static float SpeedYMagnitude = -2;
+    private static float speedY = 0;
     private Bitmap background;
     private static final int bgX = 0;
     private static int bgY = 0, bgY2;

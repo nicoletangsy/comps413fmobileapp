@@ -32,6 +32,7 @@ public class MainView extends SurfaceView {
     private long startTime = 0;
     private long pauseTime = 0;
     private float totalTime = 0;
+    private float highest = 0;
     private Vector<Obstacles> obstacles = new Vector<Obstacles>();
     private Vector<Coin> coin = new Vector<Coin>();
     private Vector<Bomb> bomb = new Vector<Bomb>();
@@ -45,6 +46,9 @@ public class MainView extends SurfaceView {
     private int coinnum = 0;
     private int bestCoin = 0;
     private int bombnum = 0;
+    private boolean bombUsed = false;
+    private int obstacleSpeedConstant = 8000;
+    private int coinSpeedConstant = 2000;
     //private String TAG = GestureActivity.class.getSimpleName();
 
     private class UserInput {
@@ -75,6 +79,15 @@ public class MainView extends SurfaceView {
                     ((AnimationDrawable)(pikachu.getDrawable())).start();
                 } else {
                     pikachu.updateLane(x);
+                    if (x > (arenaWidth*4.f/5.f) && x < arenaWidth) {
+                        if (y > 0 && y < (arenaHeight)/10.f) {
+                            if (coinnum >= 10) {
+                                coinnum -= 10;
+                                obstacles.clear();
+                            }
+
+                        }
+                    }
                 }
                 present = false;
             }
@@ -82,6 +95,8 @@ public class MainView extends SurfaceView {
 
     }
     private UserInput userInput = new UserInput();
+
+
 
 
     /** Task for the game loop. */
@@ -163,10 +178,13 @@ public class MainView extends SurfaceView {
                 textPaint.setTextSize(TEXT_SIZE);
                 textPaint.setTextAlign(Paint.Align.LEFT);
                 float gameTime = (System.currentTimeMillis() - startTime + totalTime) / 1000.0f;
-                canvas.drawText(res.getString(R.string.highest, bestCoin), TEXT_SIZE, TEXT_SIZE, textPaint);
+                if (gameTime > highest) {
+                    highest = gameTime;
+                }
+                canvas.drawText(res.getString(R.string.highest, highest), TEXT_SIZE, TEXT_SIZE, textPaint);
                 canvas.drawText(res.getString(R.string.time_elapse, gameTime), TEXT_SIZE, TEXT_SIZE*2, textPaint);
                 canvas.drawText(res.getString(R.string.coin_get, coinnum), TEXT_SIZE, TEXT_SIZE*3, textPaint);
-                canvas.drawText(res.getString(R.string.speed, bomb.size()), TEXT_SIZE, TEXT_SIZE*4, textPaint);
+                //canvas.drawText(res.getString(R.string.speed, bomb.size()), TEXT_SIZE, TEXT_SIZE*4, textPaint);
             }
         }
     }
@@ -175,7 +193,7 @@ public class MainView extends SurfaceView {
         // Task 2: Create one pair of pipes for every 15-25s randomly
         float gameTime = (System.currentTimeMillis() - startTime + totalTime);
         float timeDiff = gameTime - obstacleCreationTime;
-        if (obstacleCreationTime == -1 || timeDiff > ((Math.random()*10000) + 10000)) {
+        if (obstacleCreationTime == -1 || timeDiff > ((Math.random()*10000) + obstacleSpeedConstant)) {
             obstacleCreationTime = gameTime;
             Obstacles o = new Obstacles(context);
             obstacles.add(o);
@@ -186,7 +204,7 @@ public class MainView extends SurfaceView {
         // Task 2: Create one pair of pipes for every 3-5s randomly
         float gameTime = (System.currentTimeMillis() - startTime + totalTime);
         float timeDiff = gameTime - coinCreationTime;
-        if (coinCreationTime == -1 || timeDiff > ((Math.random()*3000) + 2000)) {
+        if (coinCreationTime == -1 || timeDiff > ((Math.random()*3000) + coinSpeedConstant)) {
             coinCreationTime = gameTime;
             Coin o = new Coin(context);
             coin.add(o);
@@ -205,7 +223,13 @@ public class MainView extends SurfaceView {
         float timeDiff = gameTime - speedupTime;
         if (timeDiff > ((Math.random()*5000) + 5000)) {
             speedupTime = gameTime;
-            Background.SpeedYMagnitude -= 1;
+            Background.SpeedYMagnitude -= 0.5;
+            if (obstacleSpeedConstant>= 500) {
+                obstacleSpeedConstant -= 500;
+            }
+            if (coinSpeedConstant >= 100) {
+                coinSpeedConstant -= 100;
+            }
         }
     }
 
@@ -214,9 +238,6 @@ public class MainView extends SurfaceView {
         gameOver = true;
         ((AnimationDrawable)(pikachu.getDrawable())).stop();
         background.stop(true);
-        if (coinnum > bestCoin) {
-            bestCoin = coinnum;
-        }
     }
 
     /** Resume or start the animation. */
@@ -263,7 +284,7 @@ public class MainView extends SurfaceView {
         obstacles.clear();
         coin.clear();
         bomb.clear();
-
+        bombUsed = false;
         ((AnimationDrawable)(pikachu.getDrawable())).stop();
         background.stop(true);
         Background.SpeedYMagnitude = -2;
