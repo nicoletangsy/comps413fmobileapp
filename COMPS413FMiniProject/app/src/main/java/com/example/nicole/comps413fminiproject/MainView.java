@@ -199,7 +199,7 @@ public class MainView extends SurfaceView {
     public void speedup() {
         float gameTime = (System.currentTimeMillis() - startTime + totalTime);
         float timeDiff = gameTime - speedupTime;
-        if (timeDiff > ((Math.random()*5000) + 10000)) {
+        if (timeDiff > ((Math.random()*5000) + 5000)) {
             speedupTime = gameTime;
             Background.SpeedYMagnitude -= 1;
         }
