@@ -76,6 +76,7 @@ public class Obstacles {
         /** Move the obstacle. */
         public void move() {
             if (dy != 0) {
+                dy = Background.SpeedYMagnitude;
                 // Update the new x position of the obstacle
                 curPos.y += dy;
 
